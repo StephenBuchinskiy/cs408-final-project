@@ -1,0 +1,12 @@
+services:
+  web:
+    build: ./web
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+  bot:
+    build: ./bot
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - APPLICATION_ID=${APPLICATION_ID}
+      - API_BASE_URL=${API_BASE_URL}
