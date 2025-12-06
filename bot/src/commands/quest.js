@@ -8,13 +8,36 @@ import { SlashCommandBuilder } from 'discord.js';
 export const data = new SlashCommandBuilder()
     .setName('quest')
     .setDescription('Manage quests')
-    .addSubcommand(s => s.setName('add').setDescription('Add a quest')
-        .addStringOption(o => o.setName('title').setDescription('Quest Title').setRequired(true)))
-    .addSubcommand(s => s.setName('done').setDescription('Mark quest as done')
-        .addStringOption(o => o.setName('id').setDescription('Quest ID').setRequired(true)))
-    .addSubcommand(s => s.setName('list').setDescription('List all quests'))
-        .addStringOption(o => o.setName('status').setDescription('open | done'))
-        .addUserOption(o => o.setName('user').setDescription('Filter by user'));
+    .addSubcommand(s => 
+        s.setName('add')
+        .setDescription('Add a quest')
+        .addStringOption(o => 
+            o.setName('title')
+            .setDescription('Quest Title')
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(s => 
+        s.setName('done')
+        .setDescription('Mark quest as done')
+        .addStringOption(o => 
+            o.setName('id')
+            .setDescription('Quest ID')
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(s => 
+        s.setName('list')
+        .setDescription('List all quests')
+        .addStringOption(o => 
+            o.setName('status')
+            .setDescription('open | done')
+        )
+        .addUserOption(o => 
+            o.setName('user')
+            .setDescription('Filter by user')
+        )
+    );
 
 
 /**

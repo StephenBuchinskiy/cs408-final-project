@@ -3,9 +3,20 @@ import { SlashCommandBuilder } from 'discord.js';
 export const data = new SlashCommandBuilder()
     .setName('kudos')
     .setDescription('Give kudos to a user')
-    .addSubcommand(s => s.setName('give').setDescription('Give kudos')
-        .addUserOption(o => o.setName('user').setDescription('User to receive kudos').setRequired(true))
-        .addIntegerOption(o => o.setName('amount').setDescription('How many kudos (default 1)').setRequired(false)));
+    .addSubcommand(s => 
+        s.setName('give')
+        .setDescription('Give kudos')
+        .addUserOption(o => 
+            o.setName('user')
+            .setDescription('User to receive kudos')
+            .setRequired(true)
+        )
+        .addIntegerOption(o => 
+            o.setName('amount')
+            .setDescription('How many kudos (default 1)')
+            .setRequired(false)
+        )
+    );
 
 export async function execute(interaction, { api }) {
     if (!interaction.isChatInputCommand()) return;
