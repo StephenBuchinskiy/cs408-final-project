@@ -1,8 +1,9 @@
 import 'dotenv/config.js';
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, GatewayIntentBits, Events } from 'discord.js';
 import fetch from 'node-fetch';
 import * as quest from './commands/quest.js';
 import * as kudos from './commands/kudos.js';
+import * as leaderboard from './commands/leaderboard.js';
 
 const {
     DISCORD_TOKEN,
@@ -44,10 +45,11 @@ async function api(path, options = {}) {
 const registry = new Map([
     [quest.data.name, quest.execute],
     [kudos.data.name, kudos.execute],
+    [leaderboard.data.name, leaderboard.execute],
 ]);
 
-client.once('ready', () => {
-    console.log(`Logged in as ${client.user.tag}`);
+client.once(Events.ClientReady, (c) => {
+    console.log(`Logged in as ${c.user.tag}`);
 });
 
 client.on('interactionCreate', async (interaction) => {

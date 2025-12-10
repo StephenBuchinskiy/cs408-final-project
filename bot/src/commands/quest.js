@@ -1,9 +1,9 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 
 /**
  * Discord slash commands for managing quests.
  * 
- * @description Slash commands for adding, completing, and listing quests.
+ * @description Slash commands for adding, completing, deleting, and listing quests.
  */
 export const data = new SlashCommandBuilder()
     .setName('quest')
@@ -24,6 +24,13 @@ export const data = new SlashCommandBuilder()
             o.setName('id')
             .setDescription('Quest ID')
             .setRequired(true)
+        )
+    )
+    .addSubcommand(s =>
+        s.setName('delete')
+        .setDescription('Delete a quest by ID')
+        .addStringOption(o =>
+            o.setName('id').setDescription('Quest ID').setRequired(true)
         )
     )
     .addSubcommand(s => 
@@ -47,9 +54,10 @@ export const data = new SlashCommandBuilder()
  * @param {Function} options.api - The API function for making HTTP requests to the backend
  * @returns {Promise<void>} An interaction reply based on the subcommand executed
  * 
- * @description Handles three subcommands:
+ * @description Handles four subcommands:
  * - add: Creates a new quest with the provided title
  * - done: Marks an existing quest as completed and awards kudos
+ * - delete: Deletes an existing quest by ID
  * - list: Retrieves and displays quests, optionally filtered by status and/or user
  * 
  * @throws {Error} If the API request fails or returns an error
@@ -83,6 +91,13 @@ export async function execute(interaction, { api }) {
             body: JSON.stringify({ status: 'done', kudos: 1 })
         });
         return interaction.editReply(`Marked quest ${updated.title} as done!`);
+    }
+
+    if (sub === 'delete') {
+        const id = interaction.options.getString('id', true);
+        await interaction.deferReply();
+        await api(`/quests/${encodeURIComponent(id)}`, { method: 'DELETE' });
+        return interaction.editReply(`Deleted quest \`${id}\`.`);
     }
 
     if (sub === 'list') {

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { REST, Routes } from 'discord.js';
 import * as quest from './commands/quest.js';
 import * as kudos from './commands/kudos.js';
+import * as leaderboard from './commands/leaderboard.js';
 
 const { DISCORD_TOKEN, APPLICATION_ID, DEV_GUILD_ID } = process.env;
 const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
@@ -9,7 +10,8 @@ const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
 // Discord slash commands to deploy
 const commands = [
     quest.data.toJSON(),
-    kudos.data.toJSON()
+    kudos.data.toJSON(),
+    leaderboard.data.toJSON(),
 ];
 
 /**
