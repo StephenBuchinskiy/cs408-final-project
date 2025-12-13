@@ -1,20 +1,93 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>Hello World!</title>
-  <meta name="description" content="">
+  <title>Questro - Leaderboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
   <script src="./js/config.js"></script>
-  <script type="module" src="./js/main.js"></script>
+  <script src="./js/main.js" type="module"></script>
 </head>
 
-<body>
-  <h1>HTML Rocks!</h1>
-  <img src="img/compile.jpeg">
-  <script type="module" src="js/main.js"></script>
+<body data-page="leaderboard">
+  <header class="header">
+    <div class="brand">Questro</div>
+    <nav aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="download.html">Download</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Leaderboard</h1>
+      <p class="lead">See who's leading by completed quests and kudos globally or by server.</p>
+    </section>
+
+    <section class="card" aria-labelledby="lb-heading">
+      <h3 id="lb-heading">Top users</h3>
+      <form id="lb-form" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); align-items:end">
+        <div class="field">
+          <label for="lb-serverId">Server ID</label>
+          <input id="lb-serverId" class="input" required placeholder="e.g., 1234567890" />
+        </div>
+        <div class="field">
+          <label for="lb-limit">Limit</label>
+          <select id="lb-limit" class="input">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="25">25</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Load Leaderboard</button>
+      </form>
+      <div id="lb-output" aria-live="polite"></div>
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="sr-only">Leaderboard</caption>
+          <thead><tr><th>#</th><th>User</th><th>Kudos</th><th>Done</th></tr></thead>
+          <tbody id="lb-body"><tr><td colspan="4" class="muted">Fill the form and load.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="q-heading">
+      <h3 id="q-heading">Quest Explorer (conditional retrieval)</h3>
+      <form id="q-form" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); align-items:end">
+        <div class="field">
+          <label for="q-serverId">Server ID</label>
+          <input id="q-serverId" class="input" required placeholder="e.g., 1234567890" />
+        </div>
+        <div class="field">
+          <label for="q-status">Status</label>
+          <select id="q-status" class="input">
+            <option value="">(any)</option>
+            <option value="open">open</option>
+            <option value="done">done</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="q-userId">User ID</label>
+          <input id="q-userId" class="input" placeholder="optional" />
+        </div>
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div id="q-output" aria-live="polite"></div>
+      <div class="table-wrap">
+        <table class="table">
+          <caption class="sr-only">Filtered quests</caption>
+          <thead><tr><th>ID</th><th>Title</th><th>Status</th><th>User</th><th>Kudos</th></tr></thead>
+          <tbody id="q-body"><tr><td colspan="5" class="muted">Use the filters above.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container"><small class="muted">Questro</small></footer>
 </body>
 
 </html>

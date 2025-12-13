@@ -1,20 +1,65 @@
 <!doctype html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Hello World!</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="./js/config.js"></script>
-  <script type="module" src="./js/main.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questro — Add the Bot</title>
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
+<body data-page="download">
+  <header class="header">
+    <div class="brand">🛡️ Questro</div>
+    <nav aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="leaderboard.html">Leaderboards</a>
+      <a href="download.html">Download</a>
+    </nav>
+  </header>
 
-<body>
-  <h1>HTML Rocks!</h1>
-  <img src="img/compile.jpeg">
-  <script type="module" src="js/main.js"></script>
+  <main class="container">
+    <section class="hero">
+      <h1>Add Questro to your server</h1>
+      <p class="lead">
+        Questro uses a <strong>single, shared backend</strong> we maintain. You don’t need to configure AWS—just invite the bot and start using commands.
+        View your server’s data any time on the <a href="leaderboard.html">Leaderboards</a> page.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Invite the Bot</h3>
+        <p>Use our invite link (scopes <strong>bot</strong> and <strong>applications.commands</strong>; permissions: Read Messages, Send Messages, Use Slash Commands, Embed Links) to add Questro to your server.</p>
+        <p class="muted">If you’re an admin running multiple servers, just invite the same bot everywhere—the data all lands in the same global database.</p>
+      </article>
+
+      <article class="card">
+        <h3>Start Using Commands</h3>
+        <ul>
+          <li><code>/quest add "Finish Lab 6"</code></li>
+          <li><code>/quest list</code></li>
+          <li><code>/quest done &lt;id&gt;</code></li>
+          <li><code>/kudos give @user 1</code></li>
+          <li><code>/leaderboard</code></li>
+        </ul>
+        <p class="muted">Everything you do here updates the same global dataset shown on the website.</p>
+      </article>
+
+      <article class="card">
+        <h3>Add Quests from the Web</h3>
+        <p>Prefer a form? Use the <strong>Home</strong> page to add quests directly—no AWS or extra setup required.</p>
+      </article>
+
+      <article class="card">
+        <h3>Where to See Your Data</h3>
+        <p>Open <a href="leaderboard.html">Leaderboards</a>, enter your Server ID, and view your server’s leaderboard, full quest list, and filters.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container"><small class="muted">© Questro</small></footer>
+
+  <script src="./js/config.js"></script>
+  <script src="./js/main.js" type="module"></script>
 </body>
-
 </html>
