@@ -17,10 +17,12 @@ if (!API_BASE_URL) throw new Error('Missing API_BASE_URL in environment.');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 /**
- * 
- * 
- * @param {*} path 
- * @param {*} options 
+ * Call Questro HTTP API with JSON defaults.
+ *
+ * @param {string} path - Path starting with "/"
+ * @param {RequestInit} [options] - fetch options
+ * @returns {Promise} Parsed JSON or text
+ * @throws {Error} On HTTP error
  */
 async function api(path, options = {}) {
     const res = await fetch(`${API_BASE_URL}${path}`, {

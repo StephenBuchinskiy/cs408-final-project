@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 
+// Leaderboard discord command
 export const data = new SlashCommandBuilder()
     .setName('leaderboard')
     .setDescription('Show the top questers in this server')
@@ -9,6 +10,12 @@ export const data = new SlashCommandBuilder()
         .setRequired(false)
     );
 
+/**
+ * Execute the leaderboard command
+ *
+ * @param {Discord} interaction - The discord interaction
+ * @param {*} api - API to call
+ */
 export async function execute(interaction, { api }){
     const guildId = interaction.guildId;
     const limit = Math.min(interaction.options.getInteger('limit') ?? 5, 25);

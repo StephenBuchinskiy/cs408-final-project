@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 
+// Kudos discord commands
 export const data = new SlashCommandBuilder()
     .setName('kudos')
     .setDescription('Give kudos to a user')
@@ -18,6 +19,12 @@ export const data = new SlashCommandBuilder()
         )
     );
 
+/**
+ * Execute the kudos command
+ *
+ * @param {Discord} interaction - The discord interaction
+ * @param {*} api - API to call
+ */
 export async function execute(interaction, { api }) {
     if (!interaction.isChatInputCommand()) return;
     const sub = interaction.options.getSubcommand();

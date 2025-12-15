@@ -7,15 +7,37 @@ import {
   getLeaderboard,
 } from "./api.js";
 
-// ---------- helpers ----------
+// =============================
+//        Helper utilities
+// =============================
+
+// querySelector
 const $ = (sel, root = document) => root.querySelector(sel);
+
+// querySelectorAll
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+// Get element by id
 const byId = (id) => document.getElementById(id);
 
+/**
+ * Input sanitizer tha removes control characters, trims whitespace, and limits length to 180 characters
+ * 
+ * @param {string} s - String to sanitize
+ * @returns {string} - sanitized string
+ */
 function sanitizeText(s) {
   return String(s ?? "").replace(/[\u0000-\u001F]/g, "").trim().slice(0, 180);
 }
 
+/**
+ * Inline alert box that announces results to screen-readers
+ * 
+ * @param {HTMLElement} target - Container to receive alert markup
+ * @param {string} msg - Message text
+ * @param {type=[info]} type - type=info
+ * @returns 
+ */
 function alertBox(target, msg, type = "info") {
   if (!target) return;
   target.innerHTML = `<div role="status" class="alert ${type}" tabindex="-1">${msg}</div>`;
@@ -23,6 +45,12 @@ function alertBox(target, msg, type = "info") {
   if (el) el.focus();
 }
 
+/**
+ * Escape text
+ * 
+ * @param {string} s - String with text to replace
+ * @returns {string} - Replaced string
+ */
 function escapeHtml(s) {
   return String(s)
     .replaceAll("&", "&amp;")
@@ -32,9 +60,11 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
-// ---------- page router ----------
+// =============================
+//         Page Router
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
-  // set active nav link
+  // Highlight the active nav link
   for (const a of $$("nav a")) {
     if (a.getAttribute("href").split("#")[0] === location.pathname.split("/").pop()) {
       a.classList.add("active");
@@ -46,17 +76,20 @@ document.addEventListener("DOMContentLoaded", () => {
   if (page === "leaderboard") initLeaderboard();
 });
 
-// ---------- pages ----------
+// =============================
+//             Pages
+// =============================
 function initHome() {
-  // Create-only — no listing here
   const form = byId("create-form");
   const out = byId("create-output");
 
+  // inputs
   const serverIdInput = byId("serverId");
   const userIdInput = byId("userId");
   const usernameInput = byId("username");
   const titleInput = byId("title");
 
+  // Intercept form submition
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     try {
@@ -72,6 +105,8 @@ function initHome() {
 
       const created = await createQuest({ serverId, userId, username, title });
       alertBox(out, `✅ Created "${escapeHtml(created.title)}" (id: ${created.id})`, "success");
+
+      // Reset form for next entry
       form.reset();
       serverIdInput.focus();
     } catch (error) {
@@ -81,7 +116,6 @@ function initHome() {
 }
 
 function initLeaderboard() {
-  // --- Leaderboard ---
   const lbForm = byId("lb-form");
   const lbOut = byId("lb-output");
   const lbBody = byId("lb-body");
@@ -108,7 +142,7 @@ function initLeaderboard() {
     }
   });
 
-  // --- All Quests (server slice) + actions ---
+  // All quests
   const allqForm = byId("allq-form");
   const allqOut = byId("allq-output");
   const allqBody = byId("all-quests-body");
@@ -127,6 +161,7 @@ function initLeaderboard() {
     }
   });
 
+  // Listener for row actions
   byId("all-quests")?.addEventListener("click", async (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
@@ -153,7 +188,7 @@ function initLeaderboard() {
     }
   });
 
-  // --- Conditional retrieval ---
+  // Conditional retrieval
   const qForm = byId("q-form");
   const qOut = byId("q-output");
   const qBody = byId("q-body");
@@ -188,7 +223,16 @@ function initLeaderboard() {
   });
 }
 
-// ---------- shared renderer ----------
+// =============================
+//          Renderers
+// =============================
+
+/**
+ * Render the server slice
+ *
+ * @param {HTMLElement} tbody - <tbody> element to fill.
+ * @param {Array} items - Array of quest records.
+ */
 function renderQuestsTable(tbody, items) {
   if (!tbody) return;
   tbody.innerHTML =
